@@ -3,151 +3,37 @@ items:
 - apiVersion: v1
   kind: Pod
   metadata:
-    creationTimestamp: "2025-03-18T16:14:36Z"
-    labels:
-      run: curl
-    name: curl
-    namespace: default
-    resourceVersion: "3399"
-    uid: 4bfc700d-2b93-46cb-b170-8f6738cb1885
-  spec:
-    containers:
-    - args:
-      - curl
-      - http://my-nextjs-app:3000
-      image: curlimages/curl
-      imagePullPolicy: Always
-      name: curl
-      resources: {}
-      stdin: true
-      stdinOnce: true
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-      tty: true
-      volumeMounts:
-      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-jm25m
-        readOnly: true
-    dnsPolicy: ClusterFirst
-    enableServiceLinks: true
-    nodeName: kind-control-plane
-    preemptionPolicy: PreemptLowerPriority
-    priority: 0
-    restartPolicy: Always
-    schedulerName: default-scheduler
-    securityContext: {}
-    serviceAccount: default
-    serviceAccountName: default
-    terminationGracePeriodSeconds: 30
-    tolerations:
-    - effect: NoExecute
-      key: node.kubernetes.io/not-ready
-      operator: Exists
-      tolerationSeconds: 300
-    - effect: NoExecute
-      key: node.kubernetes.io/unreachable
-      operator: Exists
-      tolerationSeconds: 300
-    volumes:
-    - name: kube-api-access-jm25m
-      projected:
-        defaultMode: 420
-        sources:
-        - serviceAccountToken:
-            expirationSeconds: 3607
-            path: token
-        - configMap:
-            items:
-            - key: ca.crt
-              path: ca.crt
-            name: kube-root-ca.crt
-        - downwardAPI:
-            items:
-            - fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-              path: namespace
-  status:
-    conditions:
-    - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T16:14:52Z"
-      status: "True"
-      type: PodReadyToStartContainers
-    - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T16:14:36Z"
-      status: "True"
-      type: Initialized
-    - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T16:31:07Z"
-      message: 'containers with unready status: [curl]'
-      reason: ContainersNotReady
-      status: "False"
-      type: Ready
-    - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T16:31:07Z"
-      message: 'containers with unready status: [curl]'
-      reason: ContainersNotReady
-      status: "False"
-      type: ContainersReady
-    - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T16:14:36Z"
-      status: "True"
-      type: PodScheduled
-    containerStatuses:
-    - containerID: containerd://866d11e90550e993b2bb220dd68b9b0d766a8ccf96fc93154ebf3826b8365a09
-      image: docker.io/curlimages/curl:latest
-      imageID: docker.io/curlimages/curl@sha256:94e9e444bcba979c2ea12e27ae39bee4cd10bc7041a472c4727a558e213744e6
-      lastState:
-        terminated:
-          containerID: containerd://866d11e90550e993b2bb220dd68b9b0d766a8ccf96fc93154ebf3826b8365a09
-          exitCode: 0
-          finishedAt: "2025-03-18T16:31:06Z"
-          reason: Completed
-          startedAt: "2025-03-18T16:31:06Z"
-      name: curl
-      ready: false
-      restartCount: 8
-      started: false
-      state:
-        waiting:
-          message: back-off 5m0s restarting failed container=curl pod=curl_default(4bfc700d-2b93-46cb-b170-8f6738cb1885)
-          reason: CrashLoopBackOff
-      volumeMounts:
-      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-jm25m
-        readOnly: true
-        recursiveReadOnly: Disabled
-    hostIP: 172.18.0.2
-    hostIPs:
-    - ip: 172.18.0.2
-    phase: Running
-    podIP: 10.244.0.6
-    podIPs:
-    - ip: 10.244.0.6
-    qosClass: BestEffort
-    startTime: "2025-03-18T16:14:36Z"
-- apiVersion: v1
-  kind: Pod
-  metadata:
-    creationTimestamp: "2025-03-18T15:58:09Z"
-    generateName: my-nextjs-app-5ff5747bbb-
+    annotations:
+      istio.io/rev: default
+      kubectl.kubernetes.io/default-container: my-nextjs-app
+      kubectl.kubernetes.io/default-logs-container: my-nextjs-app
+      prometheus.io/path: /stats/prometheus
+      prometheus.io/port: "15020"
+      prometheus.io/scrape: "true"
+      sidecar.istio.io/status: '{"initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["workload-socket","credential-socket","workload-certs","istio-envoy","istio-data","istio-podinfo","istio-token","istiod-ca-cert"],"imagePullSecrets":null,"revision":"default"}'
+    creationTimestamp: "2025-03-18T17:27:01Z"
+    generateName: my-nextjs-app-canary-7cd87fbf9f-
     labels:
       app: my-nextjs-app
-      pod-template-hash: 5ff5747bbb
-    name: my-nextjs-app-5ff5747bbb-272vm
+      pod-template-hash: 7cd87fbf9f
+      security.istio.io/tlsMode: istio
+      service.istio.io/canonical-name: my-nextjs-app
+      service.istio.io/canonical-revision: canary
+      version: canary
+    name: my-nextjs-app-canary-7cd87fbf9f-xhnzs
     namespace: default
     ownerReferences:
     - apiVersion: apps/v1
       blockOwnerDeletion: true
       controller: true
       kind: ReplicaSet
-      name: my-nextjs-app-5ff5747bbb
-      uid: 864083a3-f757-49df-9dc6-1cfcca58725e
-    resourceVersion: "798"
-    uid: a7a35c82-23e7-4cd2-920d-0ad8da1e3d1f
+      name: my-nextjs-app-canary-7cd87fbf9f
+      uid: 5ab57f5d-9289-4c19-a615-4092386f4121
+    resourceVersion: "1660"
+    uid: eb2cbe13-c54d-4c76-b8c6-81362764bae4
   spec:
     containers:
-    - image: fimars/my-nextjs-app-img:latest
+    - image: fimars/my-nextjs-app-img:v2
       imagePullPolicy: IfNotPresent
       name: my-nextjs-app
       ports:
@@ -158,10 +44,203 @@ items:
       terminationMessagePolicy: File
       volumeMounts:
       - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-xpvdp
+        name: kube-api-access-7plt8
+        readOnly: true
+    - args:
+      - proxy
+      - sidecar
+      - --domain
+      - $(POD_NAMESPACE).svc.cluster.local
+      - --proxyLogLevel=warning
+      - --proxyComponentLogLevel=misc:error
+      - --log_output_level=default:info
+      env:
+      - name: PILOT_CERT_PROVIDER
+        value: istiod
+      - name: CA_ADDR
+        value: istiod.istio-system.svc:15012
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: INSTANCE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
+      - name: SERVICE_ACCOUNT
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.serviceAccountName
+      - name: HOST_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      - name: ISTIO_CPU_LIMIT
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.cpu
+      - name: PROXY_CONFIG
+        value: |
+          {}
+      - name: ISTIO_META_POD_PORTS
+        value: |-
+          [
+              {"containerPort":3000,"protocol":"TCP"}
+          ]
+      - name: ISTIO_META_APP_CONTAINERS
+        value: my-nextjs-app
+      - name: GOMEMLIMIT
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.memory
+      - name: GOMAXPROCS
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.cpu
+      - name: ISTIO_META_CLUSTER_ID
+        value: Kubernetes
+      - name: ISTIO_META_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: ISTIO_META_INTERCEPTION_MODE
+        value: REDIRECT
+      - name: ISTIO_META_WORKLOAD_NAME
+        value: my-nextjs-app-canary
+      - name: ISTIO_META_OWNER
+        value: kubernetes://apis/apps/v1/namespaces/default/deployments/my-nextjs-app-canary
+      - name: ISTIO_META_MESH_ID
+        value: cluster.local
+      - name: TRUST_DOMAIN
+        value: cluster.local
+      image: docker.io/istio/proxyv2:1.25.0
+      imagePullPolicy: IfNotPresent
+      name: istio-proxy
+      ports:
+      - containerPort: 15090
+        name: http-envoy-prom
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 4
+        httpGet:
+          path: /healthz/ready
+          port: 15021
+          scheme: HTTP
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 3
+      resources:
+        limits:
+          cpu: "2"
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 40Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        privileged: false
+        readOnlyRootFilesystem: true
+        runAsGroup: 1337
+        runAsNonRoot: true
+        runAsUser: 1337
+      startupProbe:
+        failureThreshold: 600
+        httpGet:
+          path: /healthz/ready
+          port: 15021
+          scheme: HTTP
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 3
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/workload-spiffe-uds
+        name: workload-socket
+      - mountPath: /var/run/secrets/credential-uds
+        name: credential-socket
+      - mountPath: /var/run/secrets/workload-spiffe-credentials
+        name: workload-certs
+      - mountPath: /var/run/secrets/istio
+        name: istiod-ca-cert
+      - mountPath: /var/lib/istio/data
+        name: istio-data
+      - mountPath: /etc/istio/proxy
+        name: istio-envoy
+      - mountPath: /var/run/secrets/tokens
+        name: istio-token
+      - mountPath: /etc/istio/pod
+        name: istio-podinfo
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7plt8
         readOnly: true
     dnsPolicy: ClusterFirst
     enableServiceLinks: true
+    initContainers:
+    - args:
+      - istio-iptables
+      - -p
+      - "15001"
+      - -z
+      - "15006"
+      - -u
+      - "1337"
+      - -m
+      - REDIRECT
+      - -i
+      - '*'
+      - -x
+      - ""
+      - -b
+      - '*'
+      - -d
+      - 15090,15021,15020
+      - --log_output_level=default:info
+      image: docker.io/istio/proxyv2:1.25.0
+      imagePullPolicy: IfNotPresent
+      name: istio-init
+      resources:
+        limits:
+          cpu: "2"
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 40Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_ADMIN
+          - NET_RAW
+          drop:
+          - ALL
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7plt8
+        readOnly: true
     nodeName: kind-control-plane
     preemptionPolicy: PreemptLowerPriority
     priority: 0
@@ -181,7 +260,42 @@ items:
       operator: Exists
       tolerationSeconds: 300
     volumes:
-    - name: kube-api-access-xpvdp
+    - emptyDir: {}
+      name: workload-socket
+    - emptyDir: {}
+      name: credential-socket
+    - emptyDir: {}
+      name: workload-certs
+    - emptyDir:
+        medium: Memory
+      name: istio-envoy
+    - emptyDir: {}
+      name: istio-data
+    - downwardAPI:
+        defaultMode: 420
+        items:
+        - fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.labels
+          path: labels
+        - fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.annotations
+          path: annotations
+      name: istio-podinfo
+    - name: istio-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: istio-ca
+            expirationSeconds: 43200
+            path: istio-token
+    - configMap:
+        defaultMode: 420
+        name: istio-ca-root-cert
+      name: istiod-ca-cert
+    - name: kube-api-access-7plt8
       projected:
         defaultMode: 420
         sources:
@@ -202,28 +316,474 @@ items:
   status:
     conditions:
     - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T15:59:11Z"
+      lastTransitionTime: "2025-03-18T17:27:02Z"
       status: "True"
       type: PodReadyToStartContainers
     - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T15:58:09Z"
+      lastTransitionTime: "2025-03-18T17:27:02Z"
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T15:59:11Z"
+      lastTransitionTime: "2025-03-18T17:27:04Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T15:59:11Z"
+      lastTransitionTime: "2025-03-18T17:27:04Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
-      lastTransitionTime: "2025-03-18T15:58:09Z"
+      lastTransitionTime: "2025-03-18T17:27:01Z"
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://372cc277a652962783fb0ad0a3fe21e098567362fae0cc2e204c71f9918eb024
-      image: docker.io/fimars/my-nextjs-app-img:latest
+    - containerID: containerd://c67b9d63dd806b04ca4d41a10af0c8fc065badc8f719cb516b56e798fbb62276
+      image: docker.io/istio/proxyv2:1.25.0
+      imageID: docker.io/istio/proxyv2@sha256:8489a74f0a88714ce2cf523289e8ea9bba67bcfc5b214754deace8de69a8293d
+      lastState: {}
+      name: istio-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-03-18T17:27:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/workload-spiffe-uds
+        name: workload-socket
+      - mountPath: /var/run/secrets/credential-uds
+        name: credential-socket
+      - mountPath: /var/run/secrets/workload-spiffe-credentials
+        name: workload-certs
+      - mountPath: /var/run/secrets/istio
+        name: istiod-ca-cert
+      - mountPath: /var/lib/istio/data
+        name: istio-data
+      - mountPath: /etc/istio/proxy
+        name: istio-envoy
+      - mountPath: /var/run/secrets/tokens
+        name: istio-token
+      - mountPath: /etc/istio/pod
+        name: istio-podinfo
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7plt8
+        readOnly: true
+        recursiveReadOnly: Disabled
+    - containerID: containerd://2e149311ae2f9eb62831229cb7eb057d84cb40c64e88aa13c435a804f7f2cbfc
+      image: docker.io/fimars/my-nextjs-app-img:v2
+      imageID: docker.io/fimars/my-nextjs-app-img@sha256:0b243bed2ab820c251ead0f36b9dcda58f7ec37fe870fddfd12bfba5bd5603fa
+      lastState: {}
+      name: my-nextjs-app
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-03-18T17:27:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7plt8
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    initContainerStatuses:
+    - containerID: containerd://6cb368ba6223fe4f2a1d3f90761a5f2dd24006dd3687bb752189abd0e58c072d
+      image: docker.io/istio/proxyv2:1.25.0
+      imageID: docker.io/istio/proxyv2@sha256:8489a74f0a88714ce2cf523289e8ea9bba67bcfc5b214754deace8de69a8293d
+      lastState: {}
+      name: istio-init
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://6cb368ba6223fe4f2a1d3f90761a5f2dd24006dd3687bb752189abd0e58c072d
+          exitCode: 0
+          finishedAt: "2025-03-18T17:27:02Z"
+          reason: Completed
+          startedAt: "2025-03-18T17:27:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7plt8
+        readOnly: true
+        recursiveReadOnly: Disabled
+    phase: Running
+    podIP: 10.244.0.10
+    podIPs:
+    - ip: 10.244.0.10
+    qosClass: Burstable
+    startTime: "2025-03-18T17:27:01Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      istio.io/rev: default
+      kubectl.kubernetes.io/default-container: my-nextjs-app
+      kubectl.kubernetes.io/default-logs-container: my-nextjs-app
+      prometheus.io/path: /stats/prometheus
+      prometheus.io/port: "15020"
+      prometheus.io/scrape: "true"
+      sidecar.istio.io/status: '{"initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["workload-socket","credential-socket","workload-certs","istio-envoy","istio-data","istio-podinfo","istio-token","istiod-ca-cert"],"imagePullSecrets":null,"revision":"default"}'
+    creationTimestamp: "2025-03-18T17:27:01Z"
+    generateName: my-nextjs-app-stable-55947bfbfc-
+    labels:
+      app: my-nextjs-app
+      pod-template-hash: 55947bfbfc
+      security.istio.io/tlsMode: istio
+      service.istio.io/canonical-name: my-nextjs-app
+      service.istio.io/canonical-revision: stable
+      version: stable
+    name: my-nextjs-app-stable-55947bfbfc-mstgt
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: my-nextjs-app-stable-55947bfbfc
+      uid: 9fe3e3bc-3800-4a96-8fb9-47259459cab7
+    resourceVersion: "1664"
+    uid: d672a01b-7465-48d9-b3e5-a266c6809c5b
+  spec:
+    containers:
+    - image: fimars/my-nextjs-app-img:v1
+      imagePullPolicy: IfNotPresent
+      name: my-nextjs-app
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4hwqd
+        readOnly: true
+    - args:
+      - proxy
+      - sidecar
+      - --domain
+      - $(POD_NAMESPACE).svc.cluster.local
+      - --proxyLogLevel=warning
+      - --proxyComponentLogLevel=misc:error
+      - --log_output_level=default:info
+      env:
+      - name: PILOT_CERT_PROVIDER
+        value: istiod
+      - name: CA_ADDR
+        value: istiod.istio-system.svc:15012
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: INSTANCE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
+      - name: SERVICE_ACCOUNT
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.serviceAccountName
+      - name: HOST_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      - name: ISTIO_CPU_LIMIT
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.cpu
+      - name: PROXY_CONFIG
+        value: |
+          {}
+      - name: ISTIO_META_POD_PORTS
+        value: |-
+          [
+              {"containerPort":3000,"protocol":"TCP"}
+          ]
+      - name: ISTIO_META_APP_CONTAINERS
+        value: my-nextjs-app
+      - name: GOMEMLIMIT
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.memory
+      - name: GOMAXPROCS
+        valueFrom:
+          resourceFieldRef:
+            divisor: "0"
+            resource: limits.cpu
+      - name: ISTIO_META_CLUSTER_ID
+        value: Kubernetes
+      - name: ISTIO_META_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: ISTIO_META_INTERCEPTION_MODE
+        value: REDIRECT
+      - name: ISTIO_META_WORKLOAD_NAME
+        value: my-nextjs-app-stable
+      - name: ISTIO_META_OWNER
+        value: kubernetes://apis/apps/v1/namespaces/default/deployments/my-nextjs-app-stable
+      - name: ISTIO_META_MESH_ID
+        value: cluster.local
+      - name: TRUST_DOMAIN
+        value: cluster.local
+      image: docker.io/istio/proxyv2:1.25.0
+      imagePullPolicy: IfNotPresent
+      name: istio-proxy
+      ports:
+      - containerPort: 15090
+        name: http-envoy-prom
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 4
+        httpGet:
+          path: /healthz/ready
+          port: 15021
+          scheme: HTTP
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 3
+      resources:
+        limits:
+          cpu: "2"
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 40Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        privileged: false
+        readOnlyRootFilesystem: true
+        runAsGroup: 1337
+        runAsNonRoot: true
+        runAsUser: 1337
+      startupProbe:
+        failureThreshold: 600
+        httpGet:
+          path: /healthz/ready
+          port: 15021
+          scheme: HTTP
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 3
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/workload-spiffe-uds
+        name: workload-socket
+      - mountPath: /var/run/secrets/credential-uds
+        name: credential-socket
+      - mountPath: /var/run/secrets/workload-spiffe-credentials
+        name: workload-certs
+      - mountPath: /var/run/secrets/istio
+        name: istiod-ca-cert
+      - mountPath: /var/lib/istio/data
+        name: istio-data
+      - mountPath: /etc/istio/proxy
+        name: istio-envoy
+      - mountPath: /var/run/secrets/tokens
+        name: istio-token
+      - mountPath: /etc/istio/pod
+        name: istio-podinfo
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4hwqd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - args:
+      - istio-iptables
+      - -p
+      - "15001"
+      - -z
+      - "15006"
+      - -u
+      - "1337"
+      - -m
+      - REDIRECT
+      - -i
+      - '*'
+      - -x
+      - ""
+      - -b
+      - '*'
+      - -d
+      - 15090,15021,15020
+      - --log_output_level=default:info
+      image: docker.io/istio/proxyv2:1.25.0
+      imagePullPolicy: IfNotPresent
+      name: istio-init
+      resources:
+        limits:
+          cpu: "2"
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 40Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_ADMIN
+          - NET_RAW
+          drop:
+          - ALL
+        privileged: false
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4hwqd
+        readOnly: true
+    nodeName: kind-control-plane
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: workload-socket
+    - emptyDir: {}
+      name: credential-socket
+    - emptyDir: {}
+      name: workload-certs
+    - emptyDir:
+        medium: Memory
+      name: istio-envoy
+    - emptyDir: {}
+      name: istio-data
+    - downwardAPI:
+        defaultMode: 420
+        items:
+        - fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.labels
+          path: labels
+        - fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.annotations
+          path: annotations
+      name: istio-podinfo
+    - name: istio-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: istio-ca
+            expirationSeconds: 43200
+            path: istio-token
+    - configMap:
+        defaultMode: 420
+        name: istio-ca-root-cert
+      name: istiod-ca-cert
+    - name: kube-api-access-4hwqd
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-03-18T17:27:02Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-03-18T17:27:02Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-03-18T17:27:04Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-03-18T17:27:04Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-03-18T17:27:01Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://b51df6399d6d7e1ccbc8819dc8b06631f10e3d916890b0a38a889111608edab0
+      image: docker.io/istio/proxyv2:1.25.0
+      imageID: docker.io/istio/proxyv2@sha256:8489a74f0a88714ce2cf523289e8ea9bba67bcfc5b214754deace8de69a8293d
+      lastState: {}
+      name: istio-proxy
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-03-18T17:27:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/workload-spiffe-uds
+        name: workload-socket
+      - mountPath: /var/run/secrets/credential-uds
+        name: credential-socket
+      - mountPath: /var/run/secrets/workload-spiffe-credentials
+        name: workload-certs
+      - mountPath: /var/run/secrets/istio
+        name: istiod-ca-cert
+      - mountPath: /var/lib/istio/data
+        name: istio-data
+      - mountPath: /etc/istio/proxy
+        name: istio-envoy
+      - mountPath: /var/run/secrets/tokens
+        name: istio-token
+      - mountPath: /etc/istio/pod
+        name: istio-podinfo
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4hwqd
+        readOnly: true
+        recursiveReadOnly: Disabled
+    - containerID: containerd://65be3c859fa21ff355eb18a16b3968c0a35f7fc830296ef0e50177c452fe7d86
+      image: docker.io/fimars/my-nextjs-app-img:v1
       imageID: docker.io/fimars/my-nextjs-app-img@sha256:f62da9e65125c10c935409c510983488820fb45e1646e77abec5c2c8a6ec8c53
       lastState: {}
       name: my-nextjs-app
@@ -232,32 +792,53 @@ items:
       started: true
       state:
         running:
-          startedAt: "2025-03-18T15:59:11Z"
+          startedAt: "2025-03-18T17:27:02Z"
       volumeMounts:
       - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-xpvdp
+        name: kube-api-access-4hwqd
         readOnly: true
         recursiveReadOnly: Disabled
     hostIP: 172.18.0.2
     hostIPs:
     - ip: 172.18.0.2
+    initContainerStatuses:
+    - containerID: containerd://3ff538e34f06f25d27e1a02e596ccd321ac5da43ab0eff0b260edf42780a38e6
+      image: docker.io/istio/proxyv2:1.25.0
+      imageID: docker.io/istio/proxyv2@sha256:8489a74f0a88714ce2cf523289e8ea9bba67bcfc5b214754deace8de69a8293d
+      lastState: {}
+      name: istio-init
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://3ff538e34f06f25d27e1a02e596ccd321ac5da43ab0eff0b260edf42780a38e6
+          exitCode: 0
+          finishedAt: "2025-03-18T17:27:02Z"
+          reason: Completed
+          startedAt: "2025-03-18T17:27:02Z"
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4hwqd
+        readOnly: true
+        recursiveReadOnly: Disabled
     phase: Running
-    podIP: 10.244.0.5
+    podIP: 10.244.0.11
     podIPs:
-    - ip: 10.244.0.5
-    qosClass: BestEffort
-    startTime: "2025-03-18T15:58:09Z"
+    - ip: 10.244.0.11
+    qosClass: Burstable
+    startTime: "2025-03-18T17:27:01Z"
 - apiVersion: v1
   kind: Service
   metadata:
-    creationTimestamp: "2025-03-18T15:54:34Z"
+    creationTimestamp: "2025-03-18T17:17:28Z"
     labels:
       component: apiserver
       provider: kubernetes
     name: kubernetes
     namespace: default
-    resourceVersion: "195"
-    uid: eee1597e-a578-45a6-9b82-2b7742d543c7
+    resourceVersion: "197"
+    uid: 0459d9d7-76a2-4a67-8cfa-b68bfe743ae1
   spec:
     clusterIP: 10.96.0.1
     clusterIPs:
@@ -281,15 +862,15 @@ items:
     annotations:
       kubectl.kubernetes.io/last-applied-configuration: |
         {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"my-nextjs-app","namespace":"default"},"spec":{"ports":[{"nodePort":30000,"port":3000,"targetPort":3000}],"selector":{"app":"my-nextjs-app"},"type":"NodePort"}}
-    creationTimestamp: "2025-03-18T15:56:54Z"
+    creationTimestamp: "2025-03-18T17:20:24Z"
     name: my-nextjs-app
     namespace: default
-    resourceVersion: "598"
-    uid: 5c9e1393-b0d7-4e89-96dd-9f42c5436123
+    resourceVersion: "652"
+    uid: 4c97094a-9554-4c75-b4b1-23b0f53db93b
   spec:
-    clusterIP: 10.96.151.218
+    clusterIP: 10.96.213.138
     clusterIPs:
-    - 10.96.151.218
+    - 10.96.213.138
     externalTrafficPolicy: Cluster
     internalTrafficPolicy: Cluster
     ipFamilies:
@@ -312,13 +893,13 @@ items:
     annotations:
       deployment.kubernetes.io/revision: "1"
       kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"my-nextjs-app","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"my-nextjs-app"}},"template":{"metadata":{"labels":{"app":"my-nextjs-app"}},"spec":{"containers":[{"image":"fimars/my-nextjs-app-img:latest","imagePullPolicy":"IfNotPresent","name":"my-nextjs-app","ports":[{"containerPort":3000}]}]}}}}
-    creationTimestamp: "2025-03-18T15:58:09Z"
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"my-nextjs-app-canary","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"my-nextjs-app","version":"canary"}},"template":{"metadata":{"labels":{"app":"my-nextjs-app","version":"canary"}},"spec":{"containers":[{"image":"fimars/my-nextjs-app-img:v2","imagePullPolicy":"IfNotPresent","name":"my-nextjs-app","ports":[{"containerPort":3000}]}]}}}}
+    creationTimestamp: "2025-03-18T17:27:01Z"
     generation: 1
-    name: my-nextjs-app
+    name: my-nextjs-app-canary
     namespace: default
-    resourceVersion: "802"
-    uid: 158ad091-21df-4685-9548-de8455aae062
+    resourceVersion: "1665"
+    uid: baec0e64-7f7b-4fdd-99cb-941d100d50d0
   spec:
     progressDeadlineSeconds: 600
     replicas: 1
@@ -326,6 +907,7 @@ items:
     selector:
       matchLabels:
         app: my-nextjs-app
+        version: canary
     strategy:
       rollingUpdate:
         maxSurge: 25%
@@ -336,9 +918,10 @@ items:
         creationTimestamp: null
         labels:
           app: my-nextjs-app
+          version: canary
       spec:
         containers:
-        - image: fimars/my-nextjs-app-img:latest
+        - image: fimars/my-nextjs-app-img:v2
           imagePullPolicy: IfNotPresent
           name: my-nextjs-app
           ports:
@@ -355,15 +938,82 @@ items:
   status:
     availableReplicas: 1
     conditions:
-    - lastTransitionTime: "2025-03-18T15:59:11Z"
-      lastUpdateTime: "2025-03-18T15:59:11Z"
+    - lastTransitionTime: "2025-03-18T17:27:04Z"
+      lastUpdateTime: "2025-03-18T17:27:04Z"
       message: Deployment has minimum availability.
       reason: MinimumReplicasAvailable
       status: "True"
       type: Available
-    - lastTransitionTime: "2025-03-18T15:58:09Z"
-      lastUpdateTime: "2025-03-18T15:59:11Z"
-      message: ReplicaSet "my-nextjs-app-5ff5747bbb" has successfully progressed.
+    - lastTransitionTime: "2025-03-18T17:27:01Z"
+      lastUpdateTime: "2025-03-18T17:27:04Z"
+      message: ReplicaSet "my-nextjs-app-canary-7cd87fbf9f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"my-nextjs-app-stable","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"my-nextjs-app","version":"stable"}},"template":{"metadata":{"labels":{"app":"my-nextjs-app","version":"stable"}},"spec":{"containers":[{"image":"fimars/my-nextjs-app-img:v1","imagePullPolicy":"IfNotPresent","name":"my-nextjs-app","ports":[{"containerPort":3000}]}]}}}}
+    creationTimestamp: "2025-03-18T17:27:01Z"
+    generation: 1
+    name: my-nextjs-app-stable
+    namespace: default
+    resourceVersion: "1669"
+    uid: 245d55f0-6d14-4648-bfd8-911cb17ef9bf
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: my-nextjs-app
+        version: stable
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: my-nextjs-app
+          version: stable
+      spec:
+        containers:
+        - image: fimars/my-nextjs-app-img:v1
+          imagePullPolicy: IfNotPresent
+          name: my-nextjs-app
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-03-18T17:27:04Z"
+      lastUpdateTime: "2025-03-18T17:27:04Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-03-18T17:27:01Z"
+      lastUpdateTime: "2025-03-18T17:27:04Z"
+      message: ReplicaSet "my-nextjs-app-stable-55947bfbfc" has successfully progressed.
       reason: NewReplicaSetAvailable
       status: "True"
       type: Progressing
@@ -378,37 +1028,100 @@ items:
       deployment.kubernetes.io/desired-replicas: "1"
       deployment.kubernetes.io/max-replicas: "2"
       deployment.kubernetes.io/revision: "1"
-    creationTimestamp: "2025-03-18T15:58:09Z"
+    creationTimestamp: "2025-03-18T17:27:01Z"
     generation: 1
     labels:
       app: my-nextjs-app
-      pod-template-hash: 5ff5747bbb
-    name: my-nextjs-app-5ff5747bbb
+      pod-template-hash: 7cd87fbf9f
+      version: canary
+    name: my-nextjs-app-canary-7cd87fbf9f
     namespace: default
     ownerReferences:
     - apiVersion: apps/v1
       blockOwnerDeletion: true
       controller: true
       kind: Deployment
-      name: my-nextjs-app
-      uid: 158ad091-21df-4685-9548-de8455aae062
-    resourceVersion: "800"
-    uid: 864083a3-f757-49df-9dc6-1cfcca58725e
+      name: my-nextjs-app-canary
+      uid: baec0e64-7f7b-4fdd-99cb-941d100d50d0
+    resourceVersion: "1663"
+    uid: 5ab57f5d-9289-4c19-a615-4092386f4121
   spec:
     replicas: 1
     selector:
       matchLabels:
         app: my-nextjs-app
-        pod-template-hash: 5ff5747bbb
+        pod-template-hash: 7cd87fbf9f
+        version: canary
     template:
       metadata:
         creationTimestamp: null
         labels:
           app: my-nextjs-app
-          pod-template-hash: 5ff5747bbb
+          pod-template-hash: 7cd87fbf9f
+          version: canary
       spec:
         containers:
-        - image: fimars/my-nextjs-app-img:latest
+        - image: fimars/my-nextjs-app-img:v2
+          imagePullPolicy: IfNotPresent
+          name: my-nextjs-app
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-03-18T17:27:01Z"
+    generation: 1
+    labels:
+      app: my-nextjs-app
+      pod-template-hash: 55947bfbfc
+      version: stable
+    name: my-nextjs-app-stable-55947bfbfc
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: my-nextjs-app-stable
+      uid: 245d55f0-6d14-4648-bfd8-911cb17ef9bf
+    resourceVersion: "1668"
+    uid: 9fe3e3bc-3800-4a96-8fb9-47259459cab7
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: my-nextjs-app
+        pod-template-hash: 55947bfbfc
+        version: stable
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: my-nextjs-app
+          pod-template-hash: 55947bfbfc
+          version: stable
+      spec:
+        containers:
+        - image: fimars/my-nextjs-app-img:v1
           imagePullPolicy: IfNotPresent
           name: my-nextjs-app
           ports:

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nextjs-app-canary
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-nextjs-app
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: my-nextjs-app
+        version: canary
+    spec:
+      containers:
+        - name: my-nextjs-app
+          image: fimars/my-nextjs-app-img:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000

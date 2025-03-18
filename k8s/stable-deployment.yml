@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-nextjs-app
+  name: my-nextjs-app-stable
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: my-nextjs-app
+      version: stable
   template:
     metadata:
       labels:
         app: my-nextjs-app
+        version: stable
     spec:
       containers:
         - name: my-nextjs-app
-          image: fimars/my-nextjs-app-img:latest
+          image: fimars/my-nextjs-app-img:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
